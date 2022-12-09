@@ -203,7 +203,8 @@ public class BusManager : IBusManager
                     byte[] value = valueFromFalcon.Value;
                     state.Value = value;
                 }
-                Debug.WriteLineIf(valueFromFalcon is not null, $"Read from {state.Address}: {BitConverter.ToString(state.Value)}");
+                if (state.Value is not null)
+                    Debug.WriteLineIf(valueFromFalcon is not null, $"Read from {state.Address}: {BitConverter.ToString(state.Value)}");
             }
         }
     }
