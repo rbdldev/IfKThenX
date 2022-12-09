@@ -87,6 +87,7 @@ public class BusManager : IBusManager
 
         Debug.WriteLine($"From: {telegram.SourceAddress} => {telegram.DestinationAddress}: {BitConverter.ToString(telegram.Value)}");
         await CheckForKAsync();
+        CheckForKReset();
     }
 
     /// <summary>
@@ -107,6 +108,26 @@ public class BusManager : IBusManager
                 await FireXAsync(k.Xs);
 
                 k.HasFired = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Checks if states of any k is no longer matched with the bus state and reactivate the k.
+    /// </summary>
+    private void CheckForKReset()
+    {
+        IBusState realBusState = _realBusState;
+        IEnumerable<IK> compareKs = _ks
+            .Where(k => k.IsActive == true)
+            .Where(k => k.HasFired == true);
+
+        foreach (IK k in compareKs)
+        {
+            bool compareResult = Compare.BusStates(k.BusState, realBusState);
+            if (compareResult == false)
+            {
+                k.HasFired = false;
             }
         }
     }
