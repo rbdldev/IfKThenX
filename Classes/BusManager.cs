@@ -20,7 +20,7 @@ public class BusManager : IBusManager
     private Enums.BusConnectionState _connectionState;
 
     public bool AutoReconnect { get; set; } = true;
-    private int AutoreconnectDelay { get; set; } = 10_000;
+    private int AutoreconnectDelay { get; set; } = 60_000;
 
     /// <inheritdoc/>
     public Enums.BusConnectionState ConnectionState { get => _connectionState;}
@@ -38,13 +38,44 @@ public class BusManager : IBusManager
     public BusManager(IConnectionParametes connectionParameters)
     {
         _connectionParameters = connectionParameters;
-        _bus = new KnxBus(ConvertToFalcon.FromIConnectionParameters(_connectionParameters));
+        NewFalconBus(_connectionParameters);
+        AddMethodsToEvents();
+    }
 
-        _bus.GroupMessageReceived += OnGroupMessageReceivedFromFalcon;
-        _bus.ConnectionStateChanged += OnConnectionStateChangedFromFalcon;
+    private void NewFalconBus(IConnectionParametes connectionParameters)
+    {
+        _bus = new KnxBus(ConvertToFalcon.FromIConnectionParameters(connectionParameters));
+    }
 
+    private void RemoveFalconBus()
+    {
+        if (_bus is not null)
+        {
+            _bus.Dispose();
+        }
+        _bus= null;
+    }
+
+    private void AddMethodsToEvents()
+    {
+        if (_bus is not null)
+        {
+            _bus.GroupMessageReceived += OnGroupMessageReceivedFromFalcon;
+            _bus.ConnectionStateChanged += OnConnectionStateChangedFromFalcon;
+        }
         ReceivedBusTelegram += OnReceivedBusTelegramAsync;
         BusConnectionStateChanged += OnBusConnectionStateChanged;
+    }
+
+    private void RemoveMethodsFromEvents()
+    {
+        if (_bus is not null)
+        {
+            _bus.GroupMessageReceived -= OnGroupMessageReceivedFromFalcon;
+            _bus.ConnectionStateChanged -= OnConnectionStateChangedFromFalcon;
+        }
+        ReceivedBusTelegram -= OnReceivedBusTelegramAsync;
+        BusConnectionStateChanged -= OnBusConnectionStateChanged;
     }
 
     /// <inheritdoc/>
@@ -70,10 +101,13 @@ public class BusManager : IBusManager
         BusConnectionStateChanged?.Invoke(this, new EventArgs());
     }
 
-    // DEV
     private void OnBusConnectionStateChanged(object? sender, EventArgs e)
     {
         Debug.WriteLine($"Connection changed to {ConnectionState}");
+        if (AutoReconnect && ConnectionState == Enums.BusConnectionState.Closed)
+        {
+            _ = StartReconnectionProcess();
+        }
     }
 
     private async Task OnReceivedBusTelegramAsync(object? sender, ITelegram telegram)
@@ -206,6 +240,39 @@ public class BusManager : IBusManager
                 if (state.Value is not null)
                     Debug.WriteLineIf(valueFromFalcon is not null, $"Read from {state.Address}: {BitConverter.ToString(state.Value)}");
             }
+        }
+    }
+
+    private async Task Reconnect()
+    {
+        RemoveMethodsFromEvents();
+        RemoveFalconBus();
+
+        if (_connectionParameters is null)
+            throw new NullReferenceException("No connection parameters provided!");
+
+        NewFalconBus(_connectionParameters);
+        AddMethodsToEvents();
+        await ConnectAsync();
+    }
+
+    private async Task StartReconnectionProcess()
+    {
+        int timeLeft = AutoreconnectDelay;
+        while (timeLeft > 0)
+        {
+            Debug.WriteLine($"Reconnecting in {timeLeft} seconds.");
+            await Task.Delay(1000);
+            timeLeft -= 1000;
+        }
+        Debug.WriteLine("Reconnecting...");
+        try
+        {
+            await Reconnect();
+        }
+        catch (Exception ex)
+        {
+            await StartReconnectionProcess();
         }
     }
 }
