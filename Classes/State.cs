@@ -1,4 +1,5 @@
 ﻿using IfKThenX.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IfKThenX;
 
@@ -12,7 +13,7 @@ internal class State : IState
     /// <summary>
     /// The group address of the group the state corresponds to.
     /// </summary>
-    public string Address { get; set; }
+    public required string Address { get; set; }
 
     /// <summary>
     /// The value of the state. It null if no value is known or the states corresponds to a group that can not hold a value.
@@ -24,20 +25,22 @@ internal class State : IState
     /// </summary>
     public DataPointType DataPointType { get; set; }
 
+    [SetsRequiredMembers]
     public State(string address)
     {
         Address = address;
     }
 
+    [SetsRequiredMembers]
     public State(string address, DataPointType dataPointType)
     {
         Address = address;
         DataPointType = dataPointType;
     }
 
-    // Only used for deserilization from JSON.
+    // Used for deserialization from JSON.
     public State()
     {
-        Address = "0/0/0";    
+            
     }
 }
