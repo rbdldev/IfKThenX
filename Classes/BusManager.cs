@@ -125,7 +125,7 @@ public class BusManager : IBusManager
         foreach (IK k in compareKs)
         {
             bool compareResult = Compare.BusStates(k.BusState, realBusState);
-            if (compareResult == false)
+            if (compareResult == false && k.FireOnlyOnce == false)
             {
                 k.HasFired = false;
             }
