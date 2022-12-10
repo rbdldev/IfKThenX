@@ -16,3 +16,11 @@
 Welcome to **IfKThenX**, a logic layer that extends your KNX system with multi-dependent actions. It enables to define states of a bus, which are then monitored and handled with defined reactions.
 
 ---
+
+The idea of **IfKThenX** is to respond to certain states within a KNX bus system by sending predefined telegrams.  
+
+Let's give a very easy example: every time the light in the garage is turned on, you also want to turn on the lights in the courtyard entrance and turn off the lights in the living room. Then the state of turned-on lights in the garage is your condition *k*. If a condition is matched within the connected bus, the system will write the defined telegrams to the bus, in this case, to turn on the lights in the courtyard and off in the living room.  
+
+A *k* can consist of as many sub-conditions as you want. Another example is that this *k* has the condition that the light in the hallway is on, and the front door is opened. The corresponding *x* could be to turn on the lights in the courtyard entrance.
+
+## Quick start
