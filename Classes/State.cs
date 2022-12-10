@@ -34,4 +34,10 @@ internal class State : IState
         Address = address;
         DataPointType = dataPointType;
     }
+
+    // Only used for deserilization from JSON.
+    public State()
+    {
+        Address = "0/0/0";    
+    }
 }
