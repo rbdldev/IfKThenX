@@ -261,7 +261,7 @@ public class BusManager : IBusManager
         int timeLeft = AutoreconnectDelay;
         while (timeLeft > 0)
         {
-            Debug.WriteLine($"Reconnecting in {timeLeft} seconds.");
+            Debug.WriteLine($"Reconnecting in {timeLeft / 1000} seconds.");
             await Task.Delay(1000);
             timeLeft -= 1000;
         }
