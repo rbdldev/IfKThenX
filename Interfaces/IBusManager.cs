@@ -39,4 +39,11 @@ public interface IBusManager
     /// </summary>
     /// <param name="newBusState">A <see cref="IBusState"/> that used as the new actual bus representation.</param>
     void LoadBusGroups(IBusState newBusState);
+
+    /// <summary>
+    /// Asynchronous sends a telegram to the connected bus, corresponding to the values given in the <see cref="IState"/> parameter.
+    /// </summary>
+    /// <param name="state">An <see cref="IState"/> objects, whichs parameters are used to generate the telegram thats send to the connected bus.</param>
+    /// <returns>A <see cref="Task"/>, representing the telegrams sending process.</returns>
+    Task WriteStateAsync(IState state);
 }
