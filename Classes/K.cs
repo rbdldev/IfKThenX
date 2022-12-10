@@ -6,6 +6,8 @@ namespace IfKThenX;
 
 public class K : IK
 {
+    private bool _fireOnlyOnce = false;
+
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
@@ -21,7 +23,13 @@ public class K : IK
     /// </summary>
     public bool HasFired { get; set; } = false;
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public bool FireOnlyOnce { get => _fireOnlyOnce; }
+
     private List<IX> xs = new List<IX>();
+
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
@@ -35,7 +43,7 @@ public class K : IK
 
     public K(IBusState busState)
     {
-        BusState= busState;
+        BusState = busState;
     }
 
     public K(IBusState busState, IX x)
@@ -43,6 +51,14 @@ public class K : IK
         ArgumentNullException.ThrowIfNull(x);
         BusState = busState;
         xs.Add(x);
+    }
+
+    public K(IBusState busState, IX x, bool fireOnlyOnce)
+    {
+        ArgumentNullException.ThrowIfNull(x);
+        BusState = busState;
+        xs.Add(x);
+        _fireOnlyOnce= fireOnlyOnce;
     }
 
     /// <summary>

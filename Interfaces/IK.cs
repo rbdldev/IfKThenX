@@ -20,6 +20,11 @@ public interface IK
     bool HasFired { get; set; }
 
     /// <summary>
+    /// If the conditions' x can only be fired once during the hole runtime.
+    /// </summary>
+    bool FireOnlyOnce { get; }
+
+    /// <summary>
     /// The commands that are fired to the bus, wrapped in a <see cref="IX"/> list.
     /// </summary>
     IReadOnlyList<IX> Xs { get; }
