@@ -24,3 +24,14 @@ Let's give a very easy example: every time the light in the garage is turned on,
 A *k* can consist of as many sub-conditions as you want. Another example is that this *k* has the condition that the light in the hallway is on, and the front door is opened. The corresponding *x* could be to turn on the lights in the courtyard entrance.
 
 ## Quick start
+
+You can operate with IfKThenX using the `IBusManager` service with the concrete type `BusManager`. Initiate a new `IBusManager` and inject your `ConnectionParameters`. A required parameter is the IP address of your KNX-IP interface as a string. That's all you need to get IfKThenX running. Now you can connect to your KNX bus system.
+
+```CSharp
+IConnectionParametes connection = new ConnectionParameters("192.0.2.1");
+IBusManager bus = new BusManager(connection);
+await bus.ConnectAsync();
+```
+
+IfKThenX will automatically start monitoring the bus activity.  
+Finally, add one or more conditions. A condition is built of two parts, the **k** and the **x**. Every **k** can contain multiple **x**s. Under the hood, both are different states of the bus. If the state (can be a subgroup of the hole bus) within **k** is matched, the states in all corresponding **x**s are activated by sending the needed telegrams.
