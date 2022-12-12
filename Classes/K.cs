@@ -16,7 +16,7 @@ public class K : IK
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public bool IsActive { get; set; } = false;
+    public bool IsActive { get; set; } = true;
 
     /// <summary>
     /// <inheritdoc/>
