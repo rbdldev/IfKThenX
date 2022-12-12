@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace IfKThenX;
 
-internal class State : IState
+public class State : IState
 {
     /// <summary>
     /// The name of the group the states corresponds to.
