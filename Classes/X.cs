@@ -22,6 +22,16 @@ public class X : IX
     /// </summary>
     public bool IsActive { get; set; } = true;
 
+
+    public X()
+    {
+    }
+
+    public X(IBusState busState)
+    {
+        _busState = busState;
+    }
+
     /// <summary>
     /// Adds new state to the underlying busstate that is activated when this x is fired.
     /// </summary>
