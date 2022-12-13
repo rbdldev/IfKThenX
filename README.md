@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/static/v1?label=Version&message=0.1.0-alpha2&color=brightgreen" />
 </p>
 
-Welcome to **IfKThenX**, a logic layer that extends your KNX system with multi-dependent actions. It enables to define states of a bus, which are then monitored and handled with defined reactions.
+Welcome to **IfKThenX**, a logic layer that extends your [KNX](https://www.knx.org/) system with multi-dependent actions. It enables to define states of a bus, which are then monitored and handled with defined reactions.
 
 ---
 
