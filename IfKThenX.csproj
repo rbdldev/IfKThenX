@@ -5,7 +5,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>IfKThenX</Title>
-    <Version>0.1.0-alpha1</Version>
+    <Version>0.1.0-alpha2</Version>
 	<AssemblyVersion>0.1.0</AssemblyVersion>
     <Authors>Roland Braun</Authors>
     <Description>A logic layer that extends your KNX system with multi-dependent actions. It enables to define states of a bus, which are then monitored and handled with defined reactions.</Description>
