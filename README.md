@@ -19,9 +19,9 @@ Welcome to **IfKThenX**, a logic layer that extends your KNX system with multi-d
 
 The idea of **IfKThenX** is to respond to certain states within a KNX bus system by sending predefined telegrams.  
 
-Let's give a very easy example: every time the light in the garage is turned on, you also want to turn on the lights in the courtyard entrance and turn off the lights in the living room. Then the state of turned-on lights in the garage is your condition *k*. If a condition is matched within the connected bus, the system will write the defined telegrams to the bus, in this case, to turn on the lights in the courtyard and off in the living room.  
+Let's give an example: every time the light in the garage is turned on, you also want to turn on the lights in the courtyard entrance and turn off the lights in the living room. Then the state of turned-on lights in the garage is your condition **k**. If a condition is matched within the connected bus, the system will write the defined telegrams to the bus, in this case, to turn on the lights in the courtyard and off in the living room.  
 
-A *k* can consist of as many sub-conditions as you want. Another example is that this *k* has the condition that the light in the hallway is on, and the front door is opened. The corresponding *x* could be to turn on the lights in the courtyard entrance.
+A **k** can consist of as many sub-conditions as you want. Another example is that this **k** has the condition that the light in the hallway is on, and the front door is opened. The corresponding **x** could be to turn on the lights in the courtyard entrance.
 
 ## Quick start
 
@@ -48,7 +48,7 @@ kBusState.AddOrUpdateState(new State()
 });
 ```
 
-All values in IfKThenX are stored as an array of bytes. You have to provide the data point type, at least for states meant to be written to the bus. But to be consistent, you should always initiate the value. Learn more about data point types at [knx.org](https://support.knx.org/hc/en-us/articles/115001133744-Datapoint-Type).  
+All values in IfKThenX are stored as an array of bytes. You have to provide the data point type, at least for states to be written to the bus. But to be consistent, you should always initiate the value. Learn more about data point types at [knx.org](https://support.knx.org/hc/en-us/articles/115001133744-Datapoint-Type).  
 
 Now you need another bus state that represents the effect of your **x**.
 
@@ -75,6 +75,23 @@ With these few lines of code, your KNX bus will behave so that if the value insi
 You can add as many conditions as you want. Each one can have as many **x**s as you wish.  
 
 Check out the documentation for further information. (Not ready yet)
+
+## Add IfKThenX to your project
+
+Currently, IfKThenX is not distributed via NuGet.org. Download the [latest release](https://github.com/RolandBraunDev/IfKThenX/releases) and set it as a project reference in your `.csproj` file like this:
+
+```
+<ItemGroup>
+  <ProjectReference Include="path\to\IfKThenX.csproj" />
+</ItemGroup>
+```
+
+You can then start using IfKThenX by importing the namespace at the top of your `Program.cs`:
+
+```CSharp
+using IfKThenX;
+```
+
 ## Dependencies
 - [Microsoft .NET](https://dotnet.microsoft.com/)
 - [Knx.Falcon.Sdk](https://www.nuget.org/packages/Knx.Falcon.Sdk)
@@ -83,10 +100,10 @@ Check out the documentation for further information. (Not ready yet)
 
 IfKThenX is developed completely open, and your contributions are more than welcome.
 
-Before you start using IfKThenX in any of your projects, please keep in mind that it’s a hobby project, and there is no guarantee for technical correctness or future releases.  
+Before you start using IfKThenX in any of your projects, please keep in mind that it's a hobby project, and there is no guarantee for technical correctness or future releases.  
 
-Since this is a very young project, it’s likely to have many limitations and missing features, which can only be discovered and addressed as you use it. It’s recommended that you try it out for your specific use case to ensure it supports the features you need.  
+Since this is a very young project, it's likely to have many limitations and missing features, which can only be discovered and addressed as you use it. It's recommended that you try it out for your specific use case to ensure it supports the features you need.  
 
-If you wish to make a change, [open a Pull Request](https://github.com/RolandBraunDev/IfKThenX/pull/new) — even if it just contains a draft of the changes you’re planning or a test that reproduces an issue — and we can discuss it further from there.
+If you wish to make a change, [open a Pull Request](https://github.com/RolandBraunDev/IfKThenX/pull/new) — even if it just contains a draft of the changes you're planning or a test that reproduces an issue — and we can discuss it further from there.
 
-I hope you’ll enjoy using IfKThenX!
+I hope you'll enjoy using IfKThenX!
