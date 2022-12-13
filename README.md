@@ -74,7 +74,7 @@ Console.ReadKey();          // Keep the app running.
 With these few lines of code, your KNX bus will behave so that if the value inside the group `1/1/63` is on/true/1, a telegram with the same value will be sent to `1/1/71`.  
 You can add as many conditions as you want. Each one can have as many **x**s as you wish.  
 
-Check out the [documentation](https://github.com/RolandBraunDev/IfKThenX/blob/master/Documentation) for further information. (Not ready yet)
+Check out the [documentation](Documentation/) for further information.
 
 ## Add IfKThenX to your project
 
