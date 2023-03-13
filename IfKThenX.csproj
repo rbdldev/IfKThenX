@@ -29,4 +29,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".github\Images\Logo.svg" />
+    <None Include=".github\Resources\Logo.afdesign" />
+  </ItemGroup>
+
 </Project>
